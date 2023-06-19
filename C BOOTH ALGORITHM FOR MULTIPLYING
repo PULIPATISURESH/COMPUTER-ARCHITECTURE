@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int boothMultiplication(int multiplicand, int multiplier) {
+    int A = 0, Q = 0, M = multiplicand;
+    int Q_1 = 0, count = 8;  // Assuming 8-bit signed numbers
+    
+    while (count > 0) {
+        int LSB = multiplier & 1;
+        
+        if (LSB == 1 && Q_1 == 0) {
+            A += M;
+        } else if (LSB == 0 && Q_1 == 1) {
+            A -= M;
+        }
+        
+        int LSB_A = A & 1;
+        Q_1 = Q & 1;
+        
+        A = A >> 1;
+        Q = Q >> 1;
+        
+        A = A | (LSB_A << 7);  // Sign extension for 8-bit numbers
+        Q = Q | (LSB << 7);    // Sign extension for 8-bit numbers
+        
+        count--;
+    }
+    
+    return Q;
+}
+
+int main() {
+    int multiplicand, multiplier;
+    
+    printf("Enter the multiplicand: ");
+    scanf("%d", &multiplicand);
+    
+    printf("Enter the multiplier: ");
+    scanf("%d", &multiplier);
+    
+    int result = boothMultiplication(multiplicand, multiplier);
+    
+    printf("Result: %d\n", result);
+    
+    return 0;
+}
