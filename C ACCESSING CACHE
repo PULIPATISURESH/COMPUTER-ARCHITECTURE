@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+typedef struct {
+    int quotient;
+    int remainder;
+} DivisionResult;
+
+DivisionResult integerRestorationDivision(int dividend, int divisor) {
+    DivisionResult result;
+    
+    int quotient = 0;
+    int remainder = 0;
+    
+    for (int i = 31; i >= 0; i--) { // Assuming 32-bit integers
+        remainder = remainder << 1;
+        remainder = remainder | ((dividend >> i) & 1);
+        
+        if (remainder >= divisor) {
+            remainder = remainder - divisor;
+            quotient = quotient | (1 << i);
+        }
+    }
+    
+    result.quotient = quotient;
+    result.remainder = remainder;
+    
+    return result;
+}
+
+int main() {
+    int dividend, divisor;
+    
+    printf("Enter the dividend: ");
+    scanf("%d", &dividend);
+    
+    printf("Enter the divisor: ");
+    scanf("%d", &divisor);
+    
+    DivisionResult result = integerRestorationDivision(dividend, divisor);
+    
+    printf("Quotient: %d\n", result.quotient);
+    printf("Remainder: %d\n", result.remainder);
+    
+    return 0;
+}
