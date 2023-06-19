@@ -1,0 +1,32 @@
+ORG 0000H 
+NUM1    equ 12  
+NUM2    equ 16  
+RESULT  DS 01  
+
+        LXI H, NUM1  
+        MOV A, M    
+        LXI H, NUM2 
+        MOV B, M    
+
+        ; Find the GCD using Euclidean algorithm
+        CALL GCD
+
+        ; Store the result in RESULT
+        STA RESULT
+
+        HLT         
+
+GCD:    PUSH B      
+GCD_LOOP:
+        MOV B, A     
+        MOV A, C    
+        XRA B        
+        JZ GCD_END  
+        DCR A        
+        JNZ GCD_LOOP 
+
+GCD_END:
+        POP B       
+        RET          
+
+        END          
