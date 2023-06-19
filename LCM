@@ -1,0 +1,49 @@
+ORG 0000H 
+
+; Constants
+NUM1    equ 12  
+NUM2    equ 16  
+
+; Variables
+RESULT  DS 01   
+
+        LXI H, NUM1  
+        MOV A, M     
+        LXI H, NUM2  
+        MOV B, M     
+
+        ; Find the GCD (Greatest Common Divisor) using Euclidean algorithm
+        CALL GCD
+
+        ; Calculate the LCM using the formula: LCM = (num1 * num2) / GCD
+        LXI H, NUM1 
+        MOV A, M     
+        MOV C, A     
+        LXI H, NUM2  
+        MOV A, M     
+        XCHG         
+        MOV A, C    
+        XRA A       
+        DIV C        
+        XCHG        
+        STA RESULT   
+
+        HLT          
+
+GCD:    PUSH B      
+        MOV C, B    
+
+GCD_LOOP:
+        MOV B, A    
+        MOV A, C    
+        XRA B        
+        JZ GCD_END  
+        DCR A       
+        JNZ GCD_LOOP 
+
+GCD_END:
+        MOV A, C     
+        POP B       
+        RET         
+
+        END          
