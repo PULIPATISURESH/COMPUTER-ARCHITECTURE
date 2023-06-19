@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int totalInstructions = 10;  // Total number of instructions to execute
+    int fetchStageCycles = 1;    // Number of cycles for the Fetch stage
+    int decodeStageCycles = 1;   // Number of cycles for the Decode stage
+    int executeStageCycles = 1;  // Number of cycles for the Execute stage
+
+    int totalCycles = 0;         // Total clock cycles
+
+    // Calculate total clock cycles
+    totalCycles = totalInstructions * (fetchStageCycles + decodeStageCycles + executeStageCycles);
+
+    printf("Total Clock Cycles: %d\n", totalCycles);
+
+    return 0;
+}
